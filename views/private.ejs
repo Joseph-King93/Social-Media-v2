@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <p>Welcome to <%= title %>
+    </p>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <% if (user) { %>
+            <li><a href="/private">Private Page</a></li>
+            <li><a href="/logout">Log Out</a></li>
+            <% } else { %>
+                <li><a href="/auth/google">Log In</a></li>
+                <% } %>
+    </ul>
+</body>
+
+</html>
