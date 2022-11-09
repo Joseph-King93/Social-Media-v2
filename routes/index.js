@@ -11,6 +11,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/private", isLoggedIn, function (req, res) {
+
   res.render("private", { title: "Private Page" });
 });
 

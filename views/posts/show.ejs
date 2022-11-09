@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+
+<h1>show page working</h1>
+<% const username = user.find(element => element._id == post.user.toString()) %>
+<br>
+<br>
+<div class="card">
+    <%= username.name %>
+    <br>
+    <br>
+    <%= post.textContent %>
+    <br>
+    <br>
+    <label>Posted On: 
+        <%= post.createdAt.toLocaleString() %>
+    </label>
+    <br>
+
+</div>
+<br>
+
+<% post.comments.forEach(function(c) { %>
+    <% let commentUsername = user.find(element => element._id == c.user.toString()) %>
+    <div class="card">
+        <%= commentUsername.name %>
+        <br>
+        <br>
+        <%= c.textContent %>
+        <br>
+        <br>
+        <label>Posted On: 
+            <%= c.createdAt.toLocaleString() %>
+        </label>
+        <br>
+
+    </div>
+<% }); %>
+add comment
+<br>
+<br>
+<form action="/posts/<%= post.id %>/comments" method="POST">
+    <input type="text" name="textContent" placeholder="Reply to post">
+    <br>
+    <input type="submit" value="Add Comment">
+</form>
+
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+
+<br>
+<h1>My Feed</h1>
+
+<% posts.forEach(function(p) { %>
+    <br>
+    <% const username = users.find(element => element._id == p.user.toString()) %>
+
+    <div class="card">
+        <%= username.name %>
+        <br>
+        <br>
+        <%= p.textContent %>
+        <br>
+        <br>
+        <label>Posted On: 
+            <%= p.createdAt.toLocaleString() %>
+        </label>
+        <br>
+        <a href="/posts/<%= p._id %>">Details</a>
+    </div>
+<br>
+<% }); %>
+
+
+
+
+        
+<%- include('../partials/footer') %>
