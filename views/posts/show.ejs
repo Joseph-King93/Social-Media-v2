@@ -4,6 +4,9 @@
 <% const username = user.find(element => element._id == post.user.toString()) %>
 <br>
 <br>
+<form action="/posts/<%= post.id %>?_method=DELETE" class="delete-form" method="POST">
+    <button type="submit">Delete Post</button>
+</form>
 <div class="card">
     <%= username.name %>
     <br>
@@ -15,7 +18,7 @@
         <%= post.createdAt.toLocaleString() %>
     </label>
     <br>
-
+    <a href="/posts/<%= post._id %>/edit">Edit post</a>
 </div>
 <br>
 

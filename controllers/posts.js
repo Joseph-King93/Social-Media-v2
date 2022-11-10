@@ -6,7 +6,10 @@ module.exports = {
   index,
   create,
   new: newPost,
-  show
+  show,
+  delete: deletePost,
+  edit,
+  update
 };
 
 function index(req, res) {
@@ -37,5 +40,37 @@ function show(req, res) {
       User.find({}, function (err, user) {
         if (err) return res.redirect('/posts');    
       res.render('posts/show', { post, user });
-  })});
+    })
+  });
+}
+
+function deletePost(req, res) {
+  console.log("deletePost started")
+  Post.findByIdAndRemove(req.params.postId, function (err) {    
+    if (err) return res.redirect('/posts');
+  res.redirect('/posts')
+  })
+}
+
+function edit(req, res) {
+  Post.findById(req.params.postId, function (err, post) {    
+    if (err) return res.redirect('/posts');
+    User.find({}, function (err, user) {
+      if (err) return res.redirect('/posts');    
+    res.render('posts/edit', { post, user });
+  })
+});
+}
+
+// function edit(req, res) {
+//   console.log("edit function started")
+//   res.render('posts/edit')
+// }
+
+function update(req, res) {
+  console.log("updatePost started")
+  Post.findByIdAndUpdate(req.params.postId, req.body, function (err) {    
+    if (err) return res.redirect('/posts');
+  res.redirect('/posts')
+  })
 }

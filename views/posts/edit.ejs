@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+
+<h1>edit page working</h1>
+<% const username = user.find(element => element._id == post.user.toString()) %>
+<br>
+<br>
+
+<div class="card">
+    <%= username.name %>
+    <br>
+    <br>
+    <form action="/posts/<%= post.id %>?_method=PUT" method="POST" autocomplete="off">
+        <input type="text" name="textContent" value="<%= post.textContent %>">
+        <br>
+        <input type="submit" value="Edit Post">
+    </form>
+    <br>
+    <br>
+    <label>Posted On: 
+        <%= post.createdAt.toLocaleString() %>
+    </label>
+    <br>
+</div>
+<br>
+
+<h2>Edit Post Test</h2>
+<form action="/posts/<%= post.id %>?_method=PUT" method="POST" autocomplete="off">
+    <input type="text" name="textContent" value="<%= post.textContent %>">
+    <br>
+    <input type="submit" value="Edit Post">
+</form>
+
+<%- include('../partials/footer') %>
