@@ -2,6 +2,7 @@ const Post = require('../models/post');
 const User = require('../models/user');
 
 
+
 module.exports = {
   index,
   create,
@@ -37,15 +38,14 @@ function newPost(req, res) {
 function show(req, res) {
   Post.findById(req.params.postId, function (err, post) {    
       if (err) return res.redirect('/posts');
-      User.find({}, function (err, user) {
+      User.find({}, function (err, profile) {
         if (err) return res.redirect('/posts');    
-      res.render('posts/show', { post, user });
+      res.render('posts/show', { post, profile });
     })
   });
 }
 
 function deletePost(req, res) {
-  console.log("deletePost started")
   Post.findByIdAndRemove(req.params.postId, function (err) {    
     if (err) return res.redirect('/posts');
   res.redirect('/posts')
@@ -55,20 +55,14 @@ function deletePost(req, res) {
 function edit(req, res) {
   Post.findById(req.params.postId, function (err, post) {    
     if (err) return res.redirect('/posts');
-    User.find({}, function (err, user) {
+    User.find({}, function (err, profile) {
       if (err) return res.redirect('/posts');    
-    res.render('posts/edit', { post, user });
+    res.render('posts/edit', { post, profile });
   })
 });
 }
 
-// function edit(req, res) {
-//   console.log("edit function started")
-//   res.render('posts/edit')
-// }
-
 function update(req, res) {
-  console.log("updatePost started")
   Post.findByIdAndUpdate(req.params.postId, req.body, function (err) {    
     if (err) return res.redirect('/posts');
   res.redirect('/posts')

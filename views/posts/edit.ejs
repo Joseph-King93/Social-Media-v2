@@ -1,33 +1,31 @@
 <%- include('../partials/header') %>
 
 <h1>edit page working</h1>
-<% const username = user.find(element => element._id == post.user.toString()) %>
+<% const username = profile.find(element => element._id == post.user.toString()) %>
 <br>
 <br>
 
-<div class="card">
-    <%= username.name %>
-    <br>
-    <br>
-    <form action="/posts/<%= post.id %>?_method=PUT" method="POST" autocomplete="off">
-        <input type="text" name="textContent" value="<%= post.textContent %>">
+<div class="card w-50">
+    <div class="card-body">
+        <h5 class="card-title"><%= username.name %></h5>
         <br>
-        <input type="submit" value="Edit Post">
-    </form>
-    <br>
-    <br>
-    <label>Posted On: 
-        <%= post.createdAt.toLocaleString() %>
-    </label>
-    <br>
+        <form action="/posts/<%= post.id %>?_method=PUT" method="POST" autocomplete="off">
+            <input class="form-control" type="text" name="textContent" value="<%= post.textContent %>">
+            <div class="text-end">
+                <% if (user._id.equals(post.user)) { %>
+                    <button type="submit" class="btn btn-outline-dark">Submit Edit</button>
+                <% } %>
+            </div>
+            <br>
+            </div>
+            <div class="card-footer text-muted text-end">
+                <label>Posted On: <%= post.createdAt.toLocaleString() %></label>
+                <br>
+                <% if (!(post.createdAt.toLocaleString() == post.updatedAt.toLocaleString())) { %>
+                    <label>Edited On: <%= post.updatedAt.toLocaleString() %></label>
+                </form>
+                <% } %>
+    </div>
 </div>
-<br>
-
-<h2>Edit Post Test</h2>
-<form action="/posts/<%= post.id %>?_method=PUT" method="POST" autocomplete="off">
-    <input type="text" name="textContent" value="<%= post.textContent %>">
-    <br>
-    <input type="submit" value="Edit Post">
-</form>
 
 <%- include('../partials/footer') %>

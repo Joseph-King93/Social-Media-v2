@@ -1,51 +1,62 @@
 <%- include('../partials/header') %>
-
 <h1>show page working</h1>
-<% const username = user.find(element => element._id == post.user.toString()) %>
+
+<% const username = profile.find(element => element._id == post.user.toString()) %>
 <br>
 <br>
-<form action="/posts/<%= post.id %>?_method=DELETE" class="delete-form" method="POST">
-    <button type="submit">Delete Post</button>
-</form>
-<div class="card">
-    <%= username.name %>
-    <br>
-    <br>
-    <%= post.textContent %>
-    <br>
-    <br>
-    <label>Posted On: 
-        <%= post.createdAt.toLocaleString() %>
-    </label>
-    <br>
-    <a href="/posts/<%= post._id %>/edit">Edit post</a>
+<div class="card w-50">
+    <div class="card-body">
+        <h5 class="card-title"><%= username.name %></h5>
+        <br>
+        <p class="card-text"><%= post.textContent %></p>
+    </div>
+    <div class="card-footer text-muted text-end">
+        <label>Posted On: <%= post.createdAt.toLocaleString() %></label>
+        <br>
+        <% if (!(post.createdAt.toLocaleString() == post.updatedAt.toLocaleString())) { %>
+            <label>Edited On: <%= post.updatedAt.toLocaleString() %></label>
+        <% } %>
+        <% if (user._id.equals(post.user)) { %>
+        <form action="/posts/<%= post.id %>?_method=DELETE" class="delete-form" method="POST">
+            <button type="submit" class="btn btn-sm btn-outline-danger">Delete Post   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
+            </button>
+        </form>
+        <% } %>
+    </div>
 </div>
+
+<% if (user._id.equals(post.user)) { %>
+    <a class="btn btn-outline-dark" href="/posts/<%= post._id %>/edit" role="button">Edit post</a>
+<% } %>
 <br>
+<br>  
 
 <% post.comments.forEach(function(c) { %>
-    <% let commentUsername = user.find(element => element._id == c.user.toString()) %>
-    <div class="card">
-        <%= commentUsername.name %>
-        <br>
-        <br>
-        <%= c.textContent %>
-        <br>
-        <br>
-        <label>Posted On: 
-            <%= c.createdAt.toLocaleString() %>
-        </label>
-        <br>
-
+    <% let commentUsername = profile.find(element => element._id == c.user.toString()) %>
+    <div class="card w-50">
+        <div class="card-body">
+            <h5 class="card-title"><%= commentUsername.name %></h5>       
+            <br>
+            <p class="card-text"><%= c.textContent %></p> 
+        </div>       
+        <div class="card-footer text-muted text-end">
+            <label>Posted On: <%= c.createdAt.toLocaleString() %></label>
+            <br>
+        </div>
     </div>
-<% }); %>
-add comment
-<br>
-<br>
-<form action="/posts/<%= post.id %>/comments" method="POST">
-    <input type="text" name="textContent" placeholder="Reply to post">
     <br>
-    <input type="submit" value="Add Comment">
-</form>
-
+<% }); %>
+<br>
+<br>
+<div class="col-6">
+    <form action="/posts/<%= post.id %>/comments" method="POST">
+        <label for="addCommentToPost" class="form-label">Add a Comment</label>
+        <input class="form-control" type="text" name="textContent" placeholder="Reply to post" autocomplete="off">
+        <br>
+        <button type="submit" class="btn btn-outline-dark">Add Comment</button>
+    </form>
+</div>
 
 <%- include('../partials/footer') %>
